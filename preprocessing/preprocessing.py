@@ -2,6 +2,7 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
+from sklearn.model_selection import train_test_split
 
 
 def requirements():
@@ -42,7 +43,7 @@ def clean_text(text):
     return text
 
 
-def preprocessing(sms):
+def launch_preprocessing(sms):
 
     stopword_list, lemmatizer, transformation_sc_dict = requirements()
 
@@ -66,3 +67,19 @@ def preprocessing(sms):
     tokens = [clean_text(token) for token in tokens]
 
     return tokens
+
+
+def train_test(df, training, labels, split=0.2):
+
+    x = df[str(training)]
+    y = df[str(labels)]
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=split, random_state=111)
+
+    return x_train, x_test, y_train, y_test
+
+
+def concat_str_list(l):
+    s = ' '.join(l)
+
+    return s
+
